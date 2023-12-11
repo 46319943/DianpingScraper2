@@ -17,7 +17,7 @@ def review_page(page_text):
 
     reviews = page_selector.css('.reviews-items > ul > li')
     if len(reviews) == 0:
-        print('No reviews.')
+        print('No reviews found. Exiting.')
         return None
 
     dianping_name = page_selector.css('h1.shop-name::text').get()
