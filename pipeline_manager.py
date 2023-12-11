@@ -32,4 +32,4 @@ def scrape_review(dianping_id, dianping_name, start_page=1):
         time.sleep(5)
 
 
-scrape_review('G9K4MX4uAHO4TMjs', '拙政园', start_page=1)
+scrape_review('G9K4MX4uAHO4TMjs', '拙政园', start_page=54)

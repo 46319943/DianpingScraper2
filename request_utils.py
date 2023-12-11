@@ -15,12 +15,13 @@ proxies = {
 
 
 def get_page(url):
+    global cookie_text
     res = get(url,
               proxies=proxies,
               headers={'Cookie': cookie_text, 'Referer': 'http://www.dianping.com/', 'User-Agent': user_agent})
     if res.status_code == 403:
         # Re-login is required to refresh the cookie.
-        print('403 Forbidden')
+        cookie_text = get_cookie()
 
     text = res.text
     text = text.replace('<!-- ok-->', ' ')
