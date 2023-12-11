@@ -22,6 +22,7 @@ def get_page(url):
     if res.status_code == 403:
         # Re-login is required to refresh the cookie.
         cookie_text = get_cookie()
+        return get_page(url)
 
     text = res.text
     text = text.replace('<!-- ok-->', ' ')

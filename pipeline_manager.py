@@ -4,9 +4,7 @@ from page_extractor import review_page
 from request_utils import get_page
 from pymongo import MongoClient
 
-client = MongoClient()
-db = client['五感']
-
+from argparse import ArgumentParser
 
 def scrape_review(dianping_id, dianping_name, start_page=1):
     page = start_page
@@ -31,5 +29,14 @@ def scrape_review(dianping_id, dianping_name, start_page=1):
         # wait for some seconds
         time.sleep(5)
 
+if __name__ == '__main__':
+    parser = ArgumentParser()
+    parser.add_argument('-i', '--id', help='Dianping ID', required=True)
+    parser.add_argument('-n', '--name', help='Dianping Name', required=True)
+    parser.add_argument('-p', '--page', help='Start Page', default=1, type=int)
+    parser.add_argument('-d', '--database', help='Database Name', default='大众点评')
+    args = parser.parse_args()
 
-scrape_review('G9K4MX4uAHO4TMjs', '拙政园', start_page=54)
+    client = MongoClient()
+    db = client[args.database]
+    scrape_review(args.id, args.name, args.page)
