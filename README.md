@@ -28,7 +28,7 @@ The **DianpingScraper** is a scraper for the Chinese restaurant review website [
 `python pipeline_manager.py -i G9K4MX4uAHO4TMjs -n 拙政园 -p 1 -d 苏州园林`
 - The data will be stored in the MongoDB database.
 
-# Sample
+# Sample Result
 ```
 {
   "_id": {
