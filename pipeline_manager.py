@@ -38,8 +38,8 @@ if __name__ == '__main__':
     parser.add_argument('-n', '--name', help='Dianping Name', required=True)
     parser.add_argument('-p', '--page', help='Start Page', default=1, type=int)
     parser.add_argument('-d', '--database', help='Database Name', default='大众点评')
-    parser.add_argument('-s', '--interval', help='Interval Seconds', default=3, type=int)
-    parser.add_argument('-c', '--pool', help='Cookie Pool Size', default=3, type=int)
+    parser.add_argument('-s', '--interval', help='Interval Seconds', default=10, type=int)
+    parser.add_argument('-c', '--pool', help='Cookie Pool Size', default=1, type=int)
 
     args = parser.parse_args()
 
