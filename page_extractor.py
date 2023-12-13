@@ -29,7 +29,7 @@ def review_page(page_text):
         # Creating a result object
         result = {'dianping_name': dianping_name}
 
-        result['text'] = review.css('.review-words::text').get().strip()
+        result['text'] = ' '.join(review.css('.review-words::text').getall()).strip()
 
         # User link, name, ID
         user_name = review.css('.dper-info a::text').get()

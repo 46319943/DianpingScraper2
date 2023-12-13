@@ -26,7 +26,8 @@ The **DianpingScraper** is a scraper for the Chinese restaurant review website [
 `python pipeline_manager.py -i <大众点评的ID> -n <大众点评的名称> [-p <开始页面数>] [-d <数据库名称>]`
 - For example, to scrape the reviews of the restaurant [拙政园](http://www.dianping.com/shop/G9K4MX4uAHO4TMjs) from page 1, and store the data in the database `苏州园林`, run the following command:  
 `python pipeline_manager.py -i G9K4MX4uAHO4TMjs -n 拙政园 -p 1 -d 苏州园林`
-- The data will be stored in the MongoDB database.
+- The data will be stored in the MongoDB database. To export the data, run the following command:  
+`python export_to_json.py -d <数据库名称> [-c <大众点评的名称>]`
 
 # Sample Result
 ```
