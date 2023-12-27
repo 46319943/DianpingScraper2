@@ -32,6 +32,13 @@ def scrape_review(dianping_id, dianping_name, start_page, interval_seconds):
         time.sleep(interval_seconds)
 
 
+def scrape_review_wrapper(cookie_pool_size, database_name, dianping_id, dianping_name, start_page, interval_seconds):
+    global db
+    request_utils.pool_size = cookie_pool_size
+    db = MongoClient()[database_name]
+    scrape_review(dianping_id, dianping_name, start_page, interval_seconds)
+
+
 if __name__ == '__main__':
     parser = ArgumentParser()
     parser.add_argument('-i', '--id', help='Dianping ID', required=True)

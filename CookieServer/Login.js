@@ -57,10 +57,19 @@ async function pageGoto(page, url) {
 async function login() {
   const { browser, page } = await launchPage();
   await pageGoto(page, "https://account.dianping.com/login");
-  await page.waitForSelector("div.login-wrap-prod", {
-    timeout: 0,
-    hidden: true,
-  });
+  page.setDefaultTimeout(0);
+  while (true) {
+    try {
+      await page.waitForSelector("div.login-wrap-prod", {
+        timeout: 0,
+        hidden: true,
+      });
+    } catch (error) {
+      continue;
+    }
+    break;
+  }
+
   let loginCookies = await page.cookies();
   await browser.close();
   return loginCookies;
