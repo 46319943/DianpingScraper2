@@ -15,6 +15,9 @@ def export_to_jsonl(db_name, collection_name=None):
     # If collection_name is not specified, export all collections.
     if collection_name is None:
         collections = db.list_collection_names()
+        # Exclude the CookiePool collection.
+        if 'CookiePool' in collections:
+            collections.remove('CookiePool')
     else:
         collections = [collection_name]
 
