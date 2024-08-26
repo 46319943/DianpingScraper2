@@ -21,7 +21,7 @@ The **DianpingScraper** is a scraper for the Chinese restaurant review website [
 `cd CookieServer`  
 `npm install`
 - Run the cookie server  
-`node CookieServer.js`
+`node Server.js`
 - Return to the root folder of the project and Run the `pipeline_manager.py` with arguments  
 `python pipeline_manager.py -i <大众点评的ID> -n <大众点评的名称> [-p <开始页面数>] [-d <数据库名称>]`
 - For example, to scrape the reviews of the restaurant [拙政园](http://www.dianping.com/shop/G9K4MX4uAHO4TMjs) from page 1, and store the data in the database `苏州园林`, run the following command:  
