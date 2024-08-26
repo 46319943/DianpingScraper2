@@ -1,3 +1,5 @@
+import re
+
 from request_utils import get_page
 from scrapy.selector import Selector
 
@@ -25,6 +27,7 @@ def review_page(page_text):
     results = []
     for review in reviews:
         # BUG: When call review.get, the whole following content is returned.
+        # TODO: Add "like count" and "user rank" field.
 
         # Creating a result object
         result = {'dianping_name': dianping_name}
@@ -95,6 +98,74 @@ def review_page(page_text):
         results.append(result)
 
     return results
+
+
+def user_page(page_text):
+    page_selector = Selector(text=page_text)
+
+    result = {}
+
+    # 用户ID
+    url = page_selector.css('.nav .cur a::attr(href)').get()
+    match = re.search(r'member/(\d+)', url)
+    result["id"] = match.group(1) if match else None
+
+    # 名称
+    name = page_selector.css('h2.name::text').get()
+    result["name"] = name if name else ""
+
+    # 是否为VIP
+    is_vip = page_selector.css('.icon-vip')
+    result["is_vip"] = bool(is_vip)
+
+    # 等级
+    rank_element = page_selector.css('.user-info .user-rank-rst::attr(class)').get()
+    rank = None
+    if rank_element:
+        for class_name in rank_element.split():
+            if 'urr-rank' in class_name:
+                # 目前网页有BUG，不显示等级。
+                rank_str = class_name.replace('urr-rank', '')
+                if rank_str == '':
+                    rank = None
+                else:
+                    rank = int(rank_str)
+                break
+    result["rank"] = rank
+
+    # 性别
+    if page_selector.css('.woman'):
+        result["gender"] = "woman"
+    elif page_selector.css('.man'):
+        result["gender"] = "man"
+    else:
+        result["gender"] = "unknown"
+
+    # 城市
+    city = page_selector.css('.user-groun::text').get()
+    result["city"] = city if city else ""
+
+    # 注册时间
+    register_time = page_selector.css('.user-time').xpath('string(.)').get()
+    if register_time:
+        register_time = register_time.replace('注册时间：', '').strip()
+    result["register_time"] = register_time if register_time else ""
+
+    atten_list = page_selector.css('.user_atten strong::text').getall()
+    attention = atten_list[0]
+    fan = atten_list[1]
+    like = atten_list[2]
+    if attention.endswith('万'):
+        attention = float(attention[:-1]) * 10000
+    if fan.endswith('万'):
+        fan = float(fan[:-1]) * 10000
+    if like.endswith('万'):
+        like = float(like[:-1]) * 10000
+    result["attention"] = int(attention)
+    result["fan"] = int(fan)
+    result["like"] = int(like)
+
+    return result
 
 
 if __name__ == '__main__':
